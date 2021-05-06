@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parser class, contains all parser methods.
+ */
 public class HtmlParser {
 
     /**
@@ -22,7 +25,8 @@ public class HtmlParser {
         Pattern pattern = Pattern.compile("(\\d+\\.\\d+)");
         Matcher matcher = pattern.matcher(html);
         double price = 0;
-        while(matcher.find()) {
+
+        while (matcher.find()) {
             price = Double.parseDouble(matcher.group(1));
         }
         return price;

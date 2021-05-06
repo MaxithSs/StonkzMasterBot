@@ -1,12 +1,18 @@
+import objects.Coin;
+import objects.User;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Bot extends TelegramLongPollingBot {
+
     private static final String BOT_USERNAME = "StonkzMasterBot";
     private static final String BOT_TOKEN = "1825473401:AAEaKkkuI7WXiT0xFvWRfG1oqeuySVYgUA4";
+
+    private final ArrayList<User> users = new ArrayList<>();
 
     @Override
     public String getBotUsername() {
@@ -21,15 +27,34 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
-        System.out.println(update.getMessage().getFrom());
-
         String command = update.getMessage().getText();
 
+        User userToAdd = new User((
+                update.getMessage().getFrom().getId()),
+                update.getMessage().getFrom().getFirstName(),
+                update.getMessage().getFrom().getLastName(),
+                update.getMessage().getFrom().getIsBot(),
+                update.getMessage().getFrom().getUserName(),
+                update.getMessage().getFrom().getLanguageCode(),
+                new Coin("dogecoin",0.61, 1075));
+
+
+        if (users.size() > 0) {
+            users.forEach(user -> {
+                if(user.getUserId() != userToAdd.getUserId()) {
+                    users.add(userToAdd);
+                }
+            });
+        } else {
+            users.add(userToAdd);
+        }
+
+        System.out.println(users.size());
 
         if (command.startsWith("/")) {
             switch (command) {
 
-                case "/getboyfriend" -> this.sendMessage("@maxithss", update);
+                case "/showowner" -> this.sendMessage("@maxithss", update);
 
                 case "/showstonks" -> {
                     HtmlParser htmlParser = new HtmlParser();
