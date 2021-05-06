@@ -60,7 +60,7 @@ public class Bot extends TelegramLongPollingBot {
                     HtmlParser htmlParser = new HtmlParser();
                     try {
                         StringBuilder stringBuilder = new StringBuilder();
-                        double coinPrice = htmlParser.getCoinPriceFromRawHtml("https://www.coindesk.com/price/dogecoin");
+                        double coinPrice = htmlParser.getCoinPriceFromRawHtml("https://www.coindesk.com/price/", users.get(0).getCoin().getCoinName());
                         double invested = 270;
                         double amountOfCoins = 1075.12;
                         double dollarToEuroCourse = 0.83;
